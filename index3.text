@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+    .col-sm-3{
+        border:1px solid black;
+        margin:10px;
+        height:250px;
+        position: relative;
+        background-color:burlywood;
+        
+
+    }
+</style>
+</head>
+<body>
+    <div class="container">Countries 
+        <div class="row" id ="row">
+
+
+        </div>
+    </div>
+    <script>
+        async function execute()
+        {
+            
+            try{
+                var countries=await fetch("https://restcountries.eu/rest/v2/all")
+            var list=await countries.json()
+            console.log(list)
+            async function t(city)
+           {
+               try{
+               var we=await fetch("https://api.openweathermap.org/data/2.5/weather?q=&appid=d208b0af3c293ff78bdbb4e6e1d2c120")
+               var inf=await we.json()
+               console.log(inf)
+               }
+               catch(error)
+               {
+                   console.log(error)
+               }
+           }
+        for(i=0;i<list.length;i++)
+        {
+           var c=document.createElement("div")
+           c.setAttribute("class","col-sm-3")
+           var name=document.createElement("div")
+           name.setAttribute("id","country"+i)
+           name.innerHTML=list[i].name
+           name.style.backgroundColor="red";
+           c.appendChild(name)
+           
+           document.getElementById("row").append(c)
+           var f=document.createElement("img")
+           f.src=list[i].flag 
+           f.width=75
+           f.height=50
+           c.appendChild(f)
+
+           var cap=document.createElement("div")
+           cap.setAttribute("id","country_ca"+i)
+           cap.innerHTML="capital : " + list[i].capital
+           c.appendChild(cap)
+
+           var reg=document.createElement("div")
+           reg.setAttribute("id","country_reg"+i)
+           reg.innerHTML="region : " + list[i].region
+           c.appendChild(reg)
+           
+           var code=document.createElement("div")
+           code.setAttribute("id","code"+i)
+           code.innerHTML="code : " + list[i].alpha3Code
+           c.appendChild(code)
+
+           var latlng=document.createElement("div")
+           latlng.setAttribute("id","lat"+i)
+           latlng.innerHTML="lat,lng : " + list[i].latlng
+           c.appendChild(latlng)
+               
+           
+           var button=document.createElement("button")
+           button.setAttribute("class","btn btn-primary")
+           button.setAttribute("id","country_weather"+i)
+           
+           button.innerHTML="click to see weather"
+           
+           c.appendChild(button)
+        
+           
+            
+        }
+
+        }
+            
+    
+            catch(err)
+            {
+                console.log(err)
+            }
+        }
+            
+     execute()
+    </script>
+</body>
+</html>
